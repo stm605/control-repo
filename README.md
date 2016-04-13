@@ -123,8 +123,8 @@ At this point you have our control-repo code deployed into your git server.  How
 So, we'll set up a deploy key in the git server that will allow a ssh-key we make to deploy the code and configure everything else.
 
 1. On your puppet master, make an ssh key for r10k to connect to gitlab
- - `/usr/bin/ssh-keygen -t rsa -b 2048 -C 'code_manager' -f /etc/puppetlabs/puppetserver/code_manager.key -q -N ''`
- - `cat /etc/puppetlabs/puppetserver/code_manager.key.pub`
+ - `/usr/bin/ssh-keygen -t rsa -b 2048 -C 'code_manager' -f /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa -q -N ''`
+ - `cat /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa.pub`
  - References:
     - https://help.github.com/articles/generating-ssh-keys/
     - http://doc.gitlab.com/ce/ssh/README.html
@@ -136,7 +136,7 @@ So, we'll set up a deploy key in the git server that will allow a ssh-key we mak
  - Click the Classes tab
  - Add the `puppet_enterprise::profile::master`
     - Set the `r10k_remote` to the ssh url from the front page of your gitlab repo
-    - Set the `r10k_private_key` parameter to `/etc/puppetlabs/puppetserver/code_manager.key`
+    - Set the `r10k_private_key` parameter to `/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa`
  - Commit your changes
 5. Navigate back to the Classification page
  - Near the top of the page select "add a group"
