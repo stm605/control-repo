@@ -151,6 +151,7 @@ So, we'll set up a deploy key in the git server that will allow a ssh-key we mak
  - Commit your changes
 8. On your puppet master
  - Run:
+
    ~~~
    puppet agent -t
    r10k deploy environment -pv
