@@ -12,7 +12,7 @@ mod "saz/ssh",                :latest
 mod "puppetlabs/postgresql",  '4.5.0'
 mod "puppet/stash",           '1.3.0'
 mod "puppetlabs/java",        '1.4.1'
-mod "npwalker/pe_code_manager_webhook", '1.0.3'
+mod "npwalker/pe_code_manager_webhook", '1.0.8'
 
 #An example of using a specific forge module version instead of latest
 #Notice the addition of single quotes
@@ -31,7 +31,7 @@ mod 'r10k',
 
 #mod 'pe_code_manager_webhook',
 #  :git => 'https://github.com/npwalker/pe_code_manager_webhook',
-#  :ref => '6957aa67e376ca7dcc9a60a58c247ed3e7b66c16'
+#  :ref => 'de20a9640652e62b7971623f0bdf4babb5411637'
 
 mod 'gms',
   :git    => 'https://github.com/npwalker/abrader-gms',
