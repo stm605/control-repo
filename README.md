@@ -160,6 +160,8 @@ So, we will set up a deploy key in the git server that will allow a ssh-key we m
  - `cat /etc/puppetlabs/puppetserver/.puppetlabs/webhook_url.txt`
 2. In your Git server's UI, add a webhook to the control-repo repository
  - You can paste the above webhook url
+3. Disable SSL verification on the webhook
+ - Since code manager uses a self-singed cert from the Puppet CA it is not generally trusted
 3. After you created the webhook use "test webhook" or similar functionality to confirm it works
 
 ## Test Code Manager
