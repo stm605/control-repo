@@ -25,4 +25,4 @@ mod 'pltraining-rbac',
 
 mod 'rampup_profile_puppetmaster',
   :git    => 'https://github.com/PuppetLabs-RampUpProgram/RampUp_profile_puppetmaster',
-  :branch => 'master'
+  :ref    => '886eb3bb7762802e7d666f253dda854aaf3e3169'
