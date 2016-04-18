@@ -16,8 +16,8 @@ mod "npwalker/pe_code_manager_webhook", '1.0.8'
 #  :ref => 'de20a9640652e62b7971623f0bdf4babb5411637'
 
 mod 'gms',
-  :git    => 'https://github.com/npwalker/abrader-gms',
-  :branch => 'gitlab_disable_ssl_verify_support'
+  :git    => 'https://github.com/abrader/abrader-gms',
+  :ref    => 'a5105e95cf0f8b84a143d7a69a83e3ff3d4e02fb'
 
 mod 'pltraining-rbac',
   :git    => 'https://github.com/puppetlabs/pltraining-rbac',
