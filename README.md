@@ -1,6 +1,7 @@
 Table of Contents
 =================
 
+* [Join The \#ramp\-up Channel on Puppet Community Slack](#join-the-ramp-up-channel-on-puppet-community-slack)
 * [Before Starting](#before-starting)
 * [What You Get From This control\-repo](#what-you-get-from-this-control-repo)
 * [How To Set It All Up](#how-to-set-it-all-up)
@@ -17,6 +18,12 @@ Table of Contents
   * [Upgrading to PE2015\.3\.z from PE 2015\.2\.z](#upgrading-to-pe20153z-from-pe-20152z)
 * [Appendix](#appendix)
   * [Test The Zack/r10k Webhook](#test-the-zackr10k-webhook)
+
+# Join The #ramp-up Channel on Puppet Community Slack
+
+Our [Puppet Community Slack](http://slack.puppet.com) is a great way to interact with other Puppet users.  The #ramp-up channel is specifically for users talking about starting with PE and using this repository.  
+
+Other channels in the Puppet Community Slack are great for asking general Puppet questions as well.  
 
 # Before Starting
 
