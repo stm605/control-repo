@@ -25,9 +25,9 @@ Our [Puppet Community Slack](http://slack.puppet.com) is a great way to interact
 
 # Before starting
 
-This control-repo and the steps below are intended to be used with a new installation of PE 2015.3.z.  However, you can use existing installations of 2015.3.z, including [upgrades from 2015.2.z to 2015.3.z](#upgrading-to-pe20153z-from-pe-20152z), if you complete some additional steps.
+This control-repo and the steps below are intended to be used with a new installation of PE 2016.1.z.
 
-**Warning:** When using an existing PE installation, running `r10k deploy environment -pv` removes all existing modules and replaces them with with the modules defined in your [Puppetfile](https://docs.puppetlabs.com/pe/2015.3/cmgmt_puppetfile.html). Please copy or move your existing modules to another directory to ensure you do not lose any work.
+**Warning:** When using an existing PE installation any existing code or modules in `/etc/puppetlabs/code` will be copied to a backup directory `/etc/puppetlabs/code_bak_<timestamp>` in order to allow deploying code from code manager.
 
 # What you get from this control-repo
 
