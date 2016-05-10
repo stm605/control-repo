@@ -47,15 +47,15 @@ When you finish the instructions below, you will have the beginning of a best pr
 
 2. After GitLab is installed you may sign into the web UI with the `root` user and password `5iveL!fe`
 
+2. In the GitLab UI, create a group called `puppet` ( this is case sensitive )
+ - http://doc.gitlab.com/ce/workflow/groups.html
+
 3. In the GitLab UI, make a user for yourself
 
 4. From your laptop or development machine, make an SSH key to link with your user.
  - Note: this is used for your laptop to communicate with your GitLab server to push code
  - https://help.github.com/articles/generating-ssh-keys/
  - http://doc.gitlab.com/ce/ssh/README.html
-
-5. In the GitLab UI, create a group called `puppet` ( this is case sensitive )
- - http://doc.gitlab.com/ce/workflow/groups.html
 
 7. In the GitLab UI, add your user to the `puppet` group
  - Make sure to give your user at least master permissions so you can complete the below steps
@@ -64,8 +64,8 @@ When you finish the instructions below, you will have the beginning of a best pr
 
 8. In the GitLab UI, create a project called `control-repo` and set its Namespace to the `puppet` group
 
-10. On your laptop, clone this GitHub control repo
- - `git clone <repo URL>`
+10. On your laptop, clone this ramp up PuppetLabs-RampUpProgram control repo
+ - `git clone https://github.com/PuppetLabs-RampUpProgram/control-repo.git`
  - `cd control-repo`
 
 14. On your laptop, remove the origin remote

@@ -1,1 +1,3 @@
 hieradata/nodes/example-puppet-master.yaml
+Gemfile.lock
+_site/*
