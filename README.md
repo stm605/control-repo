@@ -64,7 +64,7 @@ When you finish the instructions below, you will have the beginning of a best pr
 
 8. In the GitLab UI, create a project called `control-repo` and set its Namespace to the `puppet` group
 
-10. On your laptop, clone this ramp up PuppetLabs-RampUpProgram control repo
+10. On your laptop, clone this PuppetLabs-RampUpProgram control repo
  - `git clone https://github.com/PuppetLabs-RampUpProgram/control-repo.git`
  - `cd control-repo`
 
