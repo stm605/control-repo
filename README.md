@@ -13,11 +13,8 @@ Table of contents
     * [Install PE](#install-pe)
     * [Get the control\-repo deployed on your master](#get-the-control-repo-deployed-on-your-master)
   * [Setup a webhook in your Git server](#setup-a-webhook-in-your-git-server)
+    * [Gitlab](#gitlab-1)
   * [Test Code Manager](#test-code-manager)
-* [Updating from a previous version of PE](#updating-from-a-previous-version-of-pe)
-  * [Upgrading to PE2015\.3\.z from PE 2015\.2\.z](#upgrading-to-pe20153z-from-pe-20152z)
-* [Appendix](#appendix)
-  * [Test the zack/r10k webhook](#test-the-zackr10k-webhook)
 
 # Join the #ramp-up channel on Puppet Community Slack
 
@@ -35,9 +32,9 @@ When you finish the instructions below, you will have the beginning of a best pr
 
  - A Git server
  - The ability to push code to your Git server and have it automatically deployed to your PE master
- - A config_version script that outputs the most recent sha for your code deployment each time you run `puppet agent -t`
+ - A config_version script that outputs the most recent SHA of your code each time you run `puppet agent -t`
  - Optimal tuning of PE settings for this configuration
- - Working and example [roles and profiles](https://docs.puppetlabs.com/pe/2015.3/puppet_assign_configurations.html#assigning-configuration-data-with-role-and-profile-modules) code
+ - Working and example [roles and profiles](https://docs.puppet.com/pe/latest/puppet_assign_configurations.html#assigning-configuration-data-with-role-and-profile-modules) code
 
 # How to set it all up
 
@@ -65,7 +62,7 @@ When you finish the instructions below, you will have the beginning of a best pr
  - Read more about permissions:
     - https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/permissions/permissions.md
 
-8. In the GitLab UI, create a project called `control-repo` and set the Namespace to be the `puppet` group
+8. In the GitLab UI, create a project called `control-repo` and set its Namespace to the `puppet` group
 
 10. On your laptop, clone this GitHub control repo
  - `git clone <repo URL>`
@@ -74,7 +71,7 @@ When you finish the instructions below, you will have the beginning of a best pr
 14. On your laptop, remove the origin remote
  - `git remote remove origin`
 
-15. On your latptop, add your internal repo as the origin remote
+15. On your laptop, add your internal repo as the origin remote
  - `git remote add origin <SSH URL of your GitLab repo>`
 
 16. On your laptop, push the production branch of the repo from your machine up to your Git server
@@ -106,7 +103,7 @@ http://docs.puppetlabs.com/pe/latest/install_basic.html
 
 At this point you have our control-repo code deployed into your Git server.  However, we have one final challenge: getting that code onto your Puppet master.  In the end state the master will pull code from the Git server via Code Manager, however, at this moment your Puppet master does not have credentials to get code from the Git server.
 
-So, we will set up a deploy key in the Git server that will allow an SSH key we make to deploy the code and configure everything else.
+We will set up a deploy key in the Git server that will allow an SSH key we make to deploy the code and configure everything else.
 
 1. On your Puppet master, make an SSH key for r10k to connect to GitLab
  - `/usr/bin/ssh-keygen -t rsa -b 2048 -C 'code_manager' -f /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa -q -N ''`
@@ -159,10 +156,18 @@ So, we will set up a deploy key in the Git server that will allow an SSH key we 
 
 ## Setup a webhook in your Git server
 
+Independent of which Git server you choose you will grab the webhook URL from your master.  Then each Git Server will have similar but slightly different ways to add the webhook.  
+
 1. On your Puppet master
  - `cat /etc/puppetlabs/puppetserver/.puppetlabs/webhook_url.txt`
-2. In your Git server's UI, add a webhook to the control-repo repository
- - You can paste the above webhook URL
+
+### Gitlab
+
+2. In your Git server's UI, navigate to the control-repo repository
+ -  In the left hand pane, scroll to the bottom and select **settings**
+ - In the left hand pane, select **webhooks**
+3. Paste the above webhook URL into the URL field
+4. In the trigger section mark the checkbox for **push events** only
 3. Disable SSL verification on the webhook
  - Since Code Manager uses a self-signed cert from the Puppet CA it is not generally trusted
 3. After you created the webhook use "test webhook" or similar functionality to confirm it works
@@ -181,33 +186,3 @@ One of the components setup by this control-repo is that when you "push" code to
  - `ls -l /etc/puppetlabs/code/environments/production`
     - Confirm test_file is present
 4. In your first terminal window review the `puppetserver.log` to see the type of logging each sync will create
-
-----
-# Updating from a previous version of PE
-
-## Upgrading to PE 2015.3.z from PE 2015.2.z
-
-Remove `pe_r10k` from the PE master group in the console and instead add the following two parameters to the `puppet_enterprise::profile::master` class under the PE master group.
-
-- `r10k_remote` = the SSH URL for your internal repo
-- `r10k_private_key` = `/etc/puppetlabs/puppetserver/code_manager.key`
-
-When upgrading the `puppet_enterprise::profile::master` class has the `file_sync_enabled` parameter set to `false`.  This parameter should be removed so that Code Manager can configure file sync.
-
-Finally, you’ll need to `echo 'code_manager_mv_old_code=true' > /opt/puppetlabs/facter/facts.d/code_manager_mv_old_code.txt` so that my Puppet code will redeploy all of your code with Code Manager.
-
-# Appendix
-
-## Test the zack/r10k webhook
-
-If you are using PE2015.2.z or if you've forced the use of the zack/r10k webhook then you'll want to test that it works.
-
-One of the components setup by this control-repo is that when you "push" code to your Git server, the Git server will inform the Puppet master to run `r10k deploy environment -p`.
-
-1. Edit README.md
- - Just add something to it
-2. `git add README.md`
-3. `git commit -m "edit README"`
-4. `git push origin production`
-5. Allow the push to complete and then give it few seconds to complete
- - Open `/etc/puppetlabs/code/environments/production/README.md` and confirm your change is present
