@@ -6,7 +6,8 @@ mod "puppetlabs/inifile",     '1.5.0'
 mod "puppetlabs/stdlib",      '4.12.0'
 mod "puppetlabs/concat",      '2.2.0'
 mod "hunner/hiera",           '2.0.1'
-mod "npwalker/pe_code_manager_webhook", '1.0.10'
+mod "npwalker/pe_code_manager_webhook",  '1.0.10'
+mod "npwalker/pe_metric_curl_cron_jobs", '1.0.2'
 
 # Modules from Github using various references
 # Further examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#examples
