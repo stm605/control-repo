@@ -5,7 +5,7 @@ forge "http://forge.puppetlabs.com"
 mod "puppetlabs/inifile",     '1.5.0'
 mod "puppetlabs/stdlib",      '4.12.0'
 mod "puppetlabs/concat",      '2.2.0'
-mod "hunner/hiera",           '2.0.1'
+mod "puppet/hiera",           '2.1.2'
 mod "npwalker/pe_code_manager_webhook",  '1.0.11'
 mod "npwalker/pe_metric_curl_cron_jobs", '1.0.2'
 
