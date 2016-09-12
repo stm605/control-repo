@@ -23,7 +23,3 @@ mod 'gms',
 mod 'pltraining-rbac',
   :git    => 'https://github.com/puppetlabs/pltraining-rbac',
   :ref    => '2f60e1789a721ce83f8df061e13f8bf81cd4e4ce'
-
-mod 'rampup_profile_puppetmaster',
-  :git    => 'https://github.com/PuppetLabs-RampUpProgram/RampUp_profile_puppetmaster',
-  :ref    => '886eb3bb7762802e7d666f253dda854aaf3e3169'
