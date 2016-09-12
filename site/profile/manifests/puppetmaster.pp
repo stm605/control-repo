@@ -1,4 +1,4 @@
-class rampup_profile_puppetmaster (
+class profile::puppetmaster (
   $hiera_yaml = "${::settings::confdir}/hiera.yaml"
 ){
 
