@@ -6,7 +6,7 @@ mod "puppetlabs/inifile",     '1.6.0'
 mod "puppetlabs/stdlib",      '4.12.0'
 mod "puppetlabs/concat",      '2.2.0'
 mod "puppet/hiera",           '2.1.2'
-mod "npwalker/pe_code_manager_webhook",  '1.0.11'
+mod "npwalker/pe_code_manager_webhook",  '1.0.12'
 mod "npwalker/pe_metric_curl_cron_jobs", '1.0.2'
 
 # Modules from Github using various references
@@ -14,7 +14,7 @@ mod "npwalker/pe_metric_curl_cron_jobs", '1.0.2'
 # update the tag to the most current release when implementing
 #mod 'pe_code_manager_webhook',
 #  :git => 'https://github.com/npwalker/pe_code_manager_webhook',
-#  :ref => 'de20a9640652e62b7971623f0bdf4babb5411637'
+#  :ref => '9e167154b146901d7cfd3e67dc70e984796da03f'
 
 mod 'gms',
   :git    => 'https://github.com/abrader/abrader-gms',
