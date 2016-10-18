@@ -22,7 +22,7 @@ Our [Puppet Community Slack](http://slack.puppet.com) is a great way to interact
 
 # Before starting
 
-This control-repo and the steps below are intended to be used with a new installation of PE 2016.1.z.
+This control-repo and the steps below are intended to be used with a new installation of PE.
 
 **Warning:** When using an existing PE installation any existing code or modules in `/etc/puppetlabs/code` will be copied to a backup directory `/etc/puppetlabs/code_bak_<timestamp>` in order to allow deploying code from Code Manager.
 
