@@ -6,7 +6,7 @@ mod "puppetlabs/inifile",     '1.6.0'
 mod "puppetlabs/stdlib",      '4.12.0'
 mod "puppetlabs/concat",      '2.2.0'
 mod "puppet/hiera",           '2.1.2'
-mod "npwalker/pe_code_manager_webhook",  '1.0.12'
+mod "npwalker/pe_code_manager_webhook",  '2.0.1'
 mod "npwalker/pe_metric_curl_cron_jobs", '1.0.2'
 
 # Modules from Github using various references
@@ -22,4 +22,4 @@ mod 'gms',
 
 mod 'pltraining-rbac',
   :git    => 'https://github.com/puppetlabs/pltraining-rbac',
-  :ref    => '2f60e1789a721ce83f8df061e13f8bf81cd4e4ce'
+  :ref    => '9a823ff42810988f80a2b65738054a816620d972'
