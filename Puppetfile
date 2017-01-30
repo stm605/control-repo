@@ -3,11 +3,11 @@ forge "http://forge.puppetlabs.com"
 # Modules from the Puppet Forge
 # Further examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#forge-1
 mod "puppetlabs/inifile",     '1.6.0'
-mod "puppetlabs/stdlib",      '4.12.0'
+mod "puppetlabs/stdlib",      '4.15.0'
 mod "puppetlabs/concat",      '2.2.0'
-mod "puppet/hiera",           '2.1.2'
+mod "puppet/hiera",           '2.4.0'
 mod "npwalker/pe_code_manager_webhook",  '2.0.1'
-mod "npwalker/pe_metric_curl_cron_jobs", '1.0.2'
+mod "npwalker/pe_metric_curl_cron_jobs", '2.0.0'
 
 # Modules from Github using various references
 # Further examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#examples
