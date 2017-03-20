@@ -14,7 +14,10 @@ mod "npwalker/pe_metric_curl_cron_jobs", '2.0.0'
 #
 mod 'puppetlabs-lvm', '0.9.0'
 mod 'puppet-yum', '1.0.0'
+mod 'AlexCline-fstab', '0.5.4'
+mod 'AlexCline-dirtree', '0.2.1'
 mod 'AlexCline-mounts', '0.3.1'
+
 mod 'puppet-selinux', '0.8.0'
 mod 'puppetlabs-reboot', '1.2.1'
 mod 'thias-sysctl', '1.0.6'
@@ -22,7 +25,9 @@ mod 'alexharvey-disable_transparent_hugepage', '1.2.1'
 mod 'CERNOps-abrt', '0.2.3'
 mod 'puppetlabs-limits', '0.1.0'
 mod 'treydock-kdump', '0.0.1'
+mod 'puppetlabs-firewall', '1.8.2'
 mod 'thias-rhel', '1.0.12'
+mod 'herculesteam-augeasproviders_core', '2.1.3'
 mod 'herculesteam-augeasproviders_grub', '2.4.0'
 
 # Modules from Git
