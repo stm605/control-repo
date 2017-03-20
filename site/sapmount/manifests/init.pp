@@ -44,5 +44,16 @@
 #
 class sapmount {
 
+package { 'cifs-utils': ensure => 'installed' }
+
+mounts { 'sapmount':
+  ensure => present,
+  source => '\\\\sapbits.file.core.windows.net\\linuxsapbits',
+  dest   => '/mnt/sapbits',
+  type   => 'cifs',
+  opts   => 'vers=2.1,dir_mode=0777,file_mode=0777,username=sapbits,password="2pjPgyxzaXzvZf/MseNWjx9g1C0i2T5gu3caGqonaar/Xx47MiUemYyLN8ITQdKAfDiI81tCs0xmV2kV0LakRg=="',
+}
+
+
 
 }
