@@ -117,7 +117,7 @@ package { 'libpng12': ensure => 'installed' }
 package { 'nfs-utils': ensure => 'installed' }
 package { 'lm_sensors': ensure => 'installed' }
 package { 'rsyslog': ensure => 'installed' }
-#package { 'openssl1098e': ensure => 'installed' }
+package { 'openssl098e': ensure => 'installed' }
 package { 'openssl': ensure => 'installed' }
 package { 'PackageKit-gtk3-module': ensure => 'installed' }
 package { 'libcanberra-gtk2': ensure => 'installed' }
@@ -127,7 +127,6 @@ package { 'numactl': ensure => 'installed' }
 package { 'xfsprogs': ensure => 'installed' }
 package { 'net-tools': ensure => 'installed' }
 package { 'bind-utils': ensure => 'installed' }
-#package { 'openssl098e': ensure => 'installed' }
 package { 'chrony' : ensure => 'installed' }
 
 service { 'chronyd':
