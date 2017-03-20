@@ -46,7 +46,7 @@ class hanapartition {
 
 include selinux
 include lvm
-include AlexCline::mounts
+#include AlexCline::mounts
 
 
 physical_volume { '/dev/sdc':
