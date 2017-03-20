@@ -106,20 +106,20 @@ package { 'libicu': ensure => 'installed' }
 package { 'xulrunner': ensure => 'installed' }
 package { 'sudo': ensure => 'installed' }
 package { 'tcsh': ensure => 'installed' }
-#package { 'libssh2': ensure => 'installed' }
+package { 'libssh2': ensure => 'installed' }
 package { 'expect': ensure => 'installed' }
 package { 'cairo': ensure => 'installed' }
 package { 'graphviz': ensure => 'installed' }
 package { 'iptraf-ng': ensure => 'installed' }
-#package { 'krb5-workstation': ensure => 'installed' }
-#package { 'krb5-libs': ensure => 'installed' }
+package { 'krb5-workstation': ensure => 'installed' }
+package { 'krb5-libs': ensure => 'installed' }
 package { 'libpng12': ensure => 'installed' }
 package { 'nfs-utils': ensure => 'installed' }
 package { 'lm_sensors': ensure => 'installed' }
 package { 'rsyslog': ensure => 'installed' }
 #package { 'openssl1098e': ensure => 'installed' }
-#package { 'openssl': ensure => 'installed' }
-package { 'packageKit-gtk3-module': ensure => 'installed' }
+package { 'openssl': ensure => 'installed' }
+package { 'PackageKit-gtk3-module': ensure => 'installed' }
 package { 'libcanberra-gtk2': ensure => 'installed' }
 package { 'libtool-ltdl': ensure => 'installed' }
 package { 'xorg-x11-xauth': ensure => 'installed' }
@@ -137,26 +137,29 @@ service { 'chronyd':
 
 
 #set symbolic links
-#file { '/usr/lib64/libssl.so.0.9.8e':
-#     ensure => 'link',
-#     target => '/usr/lib64/libssl.so.0.9.8',
-#}
+# keep in mind, the target is the actual file, and the
+# title is the link name
+#
+file { '/usr/lib64/libssl.so.0.9.8':
+     ensure => 'link',
+     target => '/usr/lib64/libssl.so.0.9.8e',
+}
 
 
-#file { '/usr/lib64/libssl.so.1.0.1e':
-#     ensure => 'link',
-#     target => '/usr/lib64/libssl.so.1.0.1',
-#}
+file { '/usr/lib64/libssl.so.1.0.1':
+     ensure => 'link',
+     target => '/usr/lib64/libssl.so.1.0.1e',
+}
 
-#file { '/usr/lib64/libcrypto.so.0.9.8e':
-#     ensure => 'link',
-#     target => '/usr/lib64/libcrypto.so.0.9.8',
-#}
+file { '/usr/lib64/libcrypto.so.0.9.8':
+     ensure => 'link',
+     target => '/usr/lib64/libcrypto.so.0.9.8e',
+}
 
-#file { '/usr/lib64/libcrypto.so.1.0.1e':
-#     ensure => 'link',
-#     target => '/usr/lib64/libcrypto.so.1.0.1',
-#}
+file { '/usr/lib64/libcrypto.so.1.0.1':
+     ensure => 'link',
+     target => '/usr/lib64/libcrypto.so.1.0.1e',
+}
 
 #RHEL settings for SAP HANA
 kernel_parameter { "processor.max_cstate":
