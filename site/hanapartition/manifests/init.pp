@@ -44,7 +44,7 @@
 #
 class hanapartition {
 
-include selinux
+#include selinux
 include lvm
 #include AlexCline::mounts
 
