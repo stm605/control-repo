@@ -9,14 +9,31 @@ mod "puppet/hiera",           '2.4.0'
 mod "npwalker/pe_code_manager_webhook",  '2.0.1'
 mod "npwalker/pe_metric_curl_cron_jobs", '2.0.0'
 
-# Modules from Github using various references
-# Further examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#examples
-# update the tag to the most current release when implementing
-#mod 'pe_code_manager_webhook',
-#  :git => 'https://github.com/npwalker/pe_code_manager_webhook',
-#  :ref => '9e167154b146901d7cfd3e67dc70e984796da03f'
+#required for sap deployment
+mod 'puppetlabs-lvm', '0.9.0'
+mod 'puppet-yum', '1.0.0'
+mod 'AlexCline-mounts', '0.3.1'
+mod 'puppet-selinux', '0.8.0'
+mod 'puppetlabs-reboot', '1.2.1'
+mod 'thias-sysctl', '1.0.6'
+mod 'alexharvey-disable_transparent_hugepage', '1.2.1'
+mod 'CERNOps-abrt', '0.2.3'
+mod 'puppetlabs-lilits', '0.1.0'
+mod 'treydock-kdump', '0.0.1'
+mod 'thias-rhel', '1.0.12'
+mod 'herculesteam-augeasproviders_grub', '2.4.0'
+
+# Modules from Git
+# Examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#examples
+#mod 'apache',
+#  :git    => 'https://github.com/puppetlabs/puppetlabs-apache',
+#  :commit => '83401079053dca11d61945bd9beef9ecf7576cbf'
 #
-#
+#my fixed rhsm module
+mod 'puppet-rhsm',
+  :git    => 'https://github.com/rsponholtz/puppet-rhsm',
+  :commit => 'f81c5fe29e0355a396e39f2ce2301f7f0c08f345'
+
 mod 'gms',
   :git    => 'https://github.com/abrader/abrader-gms',
   :ref    => 'a5105e95cf0f8b84a143d7a69a83e3ff3d4e02fb'
