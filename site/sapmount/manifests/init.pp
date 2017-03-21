@@ -48,12 +48,10 @@ package { 'cifs-utils': ensure => 'installed' }
 
 mounts { 'sapmount':
   ensure => present,
-  source => '\\\\sapbits.file.core.windows.net\\linuxsapbits',
+  source => '\\\\sapbitseastus2.file.core.windows.net\\linuxsapbits',
   dest   => '/mnt/sapbits',
   type   => 'cifs',
-  opts   => 'vers=2.1,dir_mode=0777,file_mode=0777,username=sapbits,password="2pjPgyxzaXzvZf/MseNWjx9g1C0i2T5gu3caGqonaar/Xx47MiUemYyLN8ITQdKAfDiI81tCs0xmV2kV0LakRg=="',
+  opts   => 'vers=3.0,dir_mode=0777,file_mode=0777,username=sapbitsus2,password="xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ=="',
 }
-
-
 
 }
