@@ -1,6 +1,6 @@
 class role::saphana {
 
-#  include hanapartition
+  include hanapartition
   include hanaconfig
   include sapmount
 
