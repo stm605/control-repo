@@ -62,7 +62,7 @@ notify { "dequals = ${dequals}" : }
 
 $theopts = "vers=3.0,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ${dequals},dir_mode=0777,file_mode=0777"
 
-notice { "theopts = ${theopts}" : }
+notify { "theopts = ${theopts}" : }
 
 mounts { 'sapmount':
   ensure => present,
