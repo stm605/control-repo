@@ -14,7 +14,7 @@ mod "npwalker/pe_metric_curl_cron_jobs", '2.0.0'
 #
 mod 'puppetlabs-lvm', '0.9.0'
 mod 'puppet-yum', '1.0.0'
-mod 'AlexCline-fstab', '0.5.4'
+#mod 'AlexCline-fstab', '0.5.4' #use my own version of this, included below
 mod 'AlexCline-dirtree', '0.2.1'
 mod 'AlexCline-mounts', '0.3.1'
 
@@ -42,6 +42,11 @@ mod 'ghoneycutt-hosts', '2.5.0'
 mod 'puppet-rhsm',
   :git    => 'https://github.com/rsponholtz/puppet-rhsm',
   :commit => 'f81c5fe29e0355a396e39f2ce2301f7f0c08f345'
+
+#my fixed rhsm module
+mod 'puppet-fstab',
+  :git    => 'https://github.com/rsponholtz/puppet-fstab',
+  :commit => '9863ddaf960ea365bd22c990f3a85dc4f7adc5bf'
 
 mod 'gms',
   :git    => 'https://github.com/abrader/abrader-gms',
