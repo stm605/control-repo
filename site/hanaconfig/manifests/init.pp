@@ -58,11 +58,6 @@ file { '/etc/sysctl.d/sap_hana.conf':
   content => 'kernel.numa_balancing=0',
 }
 
-file { '/etc/sysctl.d/kernel.numa_balancing.conf':
-  ensure => file,
-  content => 'kernel.numa_balancing=0',
-} 
-
 sysctl { 'kernel.numa_balancing': value => '0' }
 
 sysctl { 'kernel.sem': value => '1250 256000 100 1024' }
