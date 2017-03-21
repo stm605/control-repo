@@ -53,12 +53,28 @@ class { '::selinux':
 
 
 # disable NUMA balancing
-#file { '/etc/sysctl.d/sap_hana.conf':
-#  ensure => file,
-#  content => 'kernel.numa_balancing=0',
-#} 
+file { '/etc/sysctl.d/sap_hana.conf':
+  ensure => file,
+  content => 'kernel.numa_balancing=0',
+}
+
+file { '/etc/sysctl.d/kernel.numa_balancing.conf':
+  ensure => file,
+  content => 'kernel.numa_balancing=0',
+} 
 
 sysctl { 'kernel.numa_balancing': value => '0' }
+
+sysctl { 'kernel.sem': value => '1250 256000 100 1024' }
+
+#transparent hugepages should have been taken
+#care of with the above include,
+#but lets set it in the grub config as well
+#
+kernel_parameter { "transparent_hugepage":
+  ensure  => present,
+  value   => "never",
+}
 
 #diable ABRT, core dumps and kdump
 class { 'abrt':
@@ -128,6 +144,7 @@ package { 'xfsprogs': ensure => 'installed' }
 package { 'net-tools': ensure => 'installed' }
 package { 'bind-utils': ensure => 'installed' }
 package { 'chrony' : ensure => 'installed' }
+package { 'uuidd' : ensure => 'installed' }
 
 service { 'chronyd':
 	ensure => 'running',
@@ -171,5 +188,35 @@ kernel_parameter { "intel_idle.max_cstate":
   value   => "1",
 }
 
+
+#rebuild the grub config.  won't take effect until reboot
+exec { "grub-mkconfig":
+     command	=> "grub2-mkconfig -o /boot/grub2/grub.cfg", 
+    path    => '/bin:/usr/bin:/usr/sbin',
+}
+
+class { 'limits':
+  purge_limits_d_dir => false,
+}
+ limits::limits { 'sapsys_nofile':
+  ensure     => present,
+  user       => '@sapsys',
+  limit_type => 'nofile',
+  hard       => 32800,
+}
+
+
+file { '/root/before.txt':
+  content => 'one',
+  before  => File['/root/after.txt']
+}
+
+reboot { 'now':
+  subscribe => File['/root/before.txt']
+}
+
+file { '/root/after.txt':
+  content => 'two'
+}
 
 }
