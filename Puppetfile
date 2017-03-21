@@ -29,6 +29,8 @@ mod 'puppetlabs-firewall', '1.8.2'
 mod 'thias-rhel', '1.0.12'
 mod 'herculesteam-augeasproviders_core', '2.1.3'
 mod 'herculesteam-augeasproviders_grub', '2.4.0'
+mod 'ghoneycutt-hosts', '2.5.0'
+mod 'saz-limits', '2.5.0'
 
 # Modules from Git
 # Examples: https://github.com/puppetlabs/r10k/blob/master/doc/puppetfile.mkd#examples
