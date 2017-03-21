@@ -59,8 +59,10 @@ mounts { 'sapmount':
   source => '//sapbitseastus2.file.core.windows.net/linuxsapbits',
   dest   => '/mnt/sapbits',
   type   => 'cifs',
-  opts   => 'vers=3.0,dir_mode=0777,file_mode=0777,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ==',
+  opts   => 'vers=3.0,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ==,dir_mode=0777,file_mode=0777',
 }
+
+
 
 #sudo mount -t cifs //sapbitseastus2.file.core.windows.net/linuxsapbits
 #/mnt/sapbits -o vers=3.0,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ==,dir_mode=0777,file_mode=0777
