@@ -195,14 +195,9 @@ exec { "grub-mkconfig":
     path    => '/bin:/usr/bin:/usr/sbin',
 }
 
-class { 'limits':
-  purge_limits_d_dir => false,
-}
- limits::limits { 'sapsys_nofile':
-  ensure     => present,
-  user       => '@sapsys',
-  limit_type => 'nofile',
-  hard       => 32800,
+file { '/etc/security/limits.d/99-sap.conf' :
+     ensure => present,
+     content => '@sapsys hard nofile 32800 \n@sapsys soft nofile 32800'
 }
 
 
