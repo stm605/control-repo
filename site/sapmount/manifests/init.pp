@@ -54,12 +54,18 @@ package { 'cifs-utils': ensure => 'installed' }
 #  opts   => 'vers=3.0,dir_mode=0777,file_mode=0777,username=sapbitsus2,password="xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ=="',
 #}
 
+$pwe = '='
+$dequals = "${pwe}${pwe}"
+$theopts = "vers=3.0,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ${dequals},dir_mode=0777,file_mode=0777"
+
+notice("$theopts")
+
 mounts { 'sapmount':
   ensure => present,
   source => '//sapbitseastus2.file.core.windows.net/linuxsapbits',
   dest   => '/mnt/sapbits',
   type   => 'cifs',
-  opts   => "vers=3.0,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ==,dir_mode=0777,file_mode=0777",
+  opts   => $theopts,
 }
 
 
