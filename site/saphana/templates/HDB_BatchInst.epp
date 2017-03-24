@@ -34,7 +34,7 @@ checkmnt=
 sapmnt=/hana/shared
 
 # Local Host Name ( Default: saphana-db )
-hostname=saphana-db
+hostname=<%= $facts[hostname] %>
 
 # Install SSH Key ( Default: y )
 install_ssh_key=y
