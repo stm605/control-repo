@@ -52,8 +52,10 @@ file { '/root/HDB_BatchInst':
 }
 
 #run the actual install
+# /mnt/sapbits/HANA_51051151/DATA_UNITS/HDB_LCM_LINUX_X86_64
+
 exec { "install_start_hana":
-     command	=> "hdblcm -b --configfile /root/HDB_BatchInst",
+     command	=> "./hdblcm -b --configfile /root/HDB_BatchInst",
      cwd => '/mnt/sapbits/HANA_51051151/DATA_UNITS/HDB_LCM_LINUX_X86_64',
      path    => '/bin:/usr/bin:/usr/sbin',
      unless  => 'sudo -u hdbadm bash -l /usr/sap/HDB/HDB00/HDB info 2>&1 | grep hdbnameserver',
