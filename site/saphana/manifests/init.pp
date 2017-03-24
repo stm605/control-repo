@@ -44,5 +44,20 @@
 #
 class saphana {
 
+#create the HDB_BatchInst file
+# disable NUMA balancing
+file { '/root/HDB_BatchInst':
+  ensure => file,
+  content => epp('saphana/HDB_BatchInst.epp')
+}
+
+#run the actual install
+exec { "install_start_hana":
+     command	=> "hdblcm -b --configfile /root/HDB_BatchInst",
+     cwd => '/mnt/sapbits/HANA_51051151/DATA_UNITS/HDB_LCM_LINUX_X86_64',
+     path    => '/bin:/usr/bin:/usr/sbin',
+     unless  => 'sudo -u hdbadm bash -l /usr/sap/HDB/HDB00/HDB info 2>&1 | grep hdbnameserver',
+     require => File['/root/HDB_BatchInst'],     
+}
 
 }
