@@ -74,24 +74,32 @@ logical_volume { 'datalv':
   ensure       => present,
   volume_group => 'hanavg',
   size         => '700G',
+  stripes      => '4',
+  stripesize   =>  '64'
 }
 
 logical_volume { 'loglv':
   ensure       => present,
   volume_group => 'hanavg',
   size         => '300G',
+  stripes      => '4',
+  stripesize   =>  '64'
 }
 
 logical_volume { 'hanasharedlv':
   ensure       => present,
   volume_group => 'hanavg',
   size         => '300G',
+  stripes      => '4',
+  stripesize   =>  '64'
 }
 
 logical_volume { 'usrsaplv':
   ensure       => present,
   volume_group => 'hanavg',
   size         => '200G',
+  stripes      => '4',
+  stripesize   =>  '64'
 }
 
 filesystem { '/dev/hanavg/hanasharedlv':
