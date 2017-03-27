@@ -91,7 +91,7 @@ mounts { 'sapmount2':
 
 exec { "extract linuxsapbits.tar" :
    command => "tar -xf /mnt/sapbits2/linuxsapbits.tar",
-   unless => "find /mnt/sapbits | grep  HANA_51051151",
+   unless => "/usr/bin/find /mnt/sapbits 2>&1 | /usr/bin/grep  HANA_51051151",
    creates => "/mnt/sapbits/HANA_51051151",
    cwd => "/mnt/sapbits",
 }
