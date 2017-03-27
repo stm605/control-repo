@@ -84,12 +84,12 @@ file { '/silent/sapinst.sh':
 }
 
   exec { "chown silent and sapbits":
-       command => "chown root:sapinst /silent /mnt /mnt/sapbits",
+       command => "chown -R root:sapinst /silent /mnt/sapbits",
     path    => '/bin:/usr/bin:/usr/sbin',
     }
 
   exec { "chmod silent and sapbits" :
-       command => "chmod 775 /silent /mnt /mnt/sapbits",
+       command => "chmod -R 775 /silent /mnt/sapbits",
            path    => '/bin:/usr/bin:/usr/sbin',
        }
 
