@@ -44,12 +44,66 @@
 #
 class sapapp {
 
-#create the HDB_BatchInst file
-# disable NUMA balancing
-#file { '/root/HDB_BatchInst':
-#  ensure => file,
-#  content => epp('sapapp/HDB_BatchInst.epp')
+
+  group { 'sapinst':
+    ensure => 'present',
+  }
+
+  file { '/silent':
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'sapinst',
+    mode   => '0775',
+  }
+
+  
+  
+  exec { "chown silent and sapbits":
+       command => "chown root:sapinst /silent /mnt /mnt/sapbits"
+       	       }
+
+  exec { "chmod silent and sapbits" :
+       command => "chmod 775 /silent /mnt /mnt/sapbits"
+       }
+
+#put required files into silent directory
+file { '/silent/doc.dtd':
+  ensure => file,
+  content => epp('sapapp/doc.dtd.epp')
+}
+
+file { '/silent/inifile.xml':
+  ensure => file,
+  content => epp('sapapp/inifile.xml.epp')
+}
+
+file { '/silent/keydb.xml':
+  ensure => file,
+  content => epp('sapapp/keydb.xml.epp')
+}
+
+file { '/silent/start_dir.cd':
+  ensure => file,
+  content => epp('sapapp/start_dir.cd.epp')
+}
+
+file { '/silent/sapinst.sh':
+  ensure => file,
+  content => epp('sapapp/sapinst.sh.epp')
+}
+
+
+#exec { "install_start_sapapp":
+#     command	=> "/mnt/sapbits/SWPM10_SP19_Patches/Sapinst SAPINST_PARAMETER_CONTAINER_URL=inifile.xml SAPINST_EXECUTE_PRODUCT_ID=NW_ABAP_OneHost:BS2016.ERP608.HDB.PD SAPINST_SKIP_DIALOGS=true -nogui -noguiserver",
+#     cwd => '/silent',
+#     path    => '/bin:/usr/bin:/usr/sbin:./',
+#     unless  => 'sudo -u hdbadm bash -l /usr/sap/HDB/HDB00/HDB info 2>&1 | grep# hdbnameserver',
+#     require => File['/root/HDB_BatchInst'],
+#     timeout => '0',
+#     environment => "HDB_MASSIMPORT=yes",
 #}
+
+ 
 
 #run the actual install
 # /mnt/sapbits/HANA_51051151/DATA_UNITS/HDB_LCM_LINUX_X86_64

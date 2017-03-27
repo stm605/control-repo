@@ -75,6 +75,10 @@ mounts { 'Mount point sapbits':
 }
 
 #now that sapbits is created, copy the data to it
+package { 'cifs-utils': ensure => 'installed' }
+
+#
+
 $theopts = "vers=3.0,username=sapbitseastus2,password=xFN8vqjuNmZJylg4y++fEpM4WeJAd3jLMiA1zlJtGik5n1aKgWo/Vk0pXg1h9ke37XI8USw88Eq0gE/2zrtmuQ==,dir_mode=0777,file_mode=0777"
 
 mounts { 'sapmount2':
@@ -85,15 +89,13 @@ mounts { 'sapmount2':
   opts   => $theopts,
 }
 
+   exec { "extract linuxsapbits.tar" :
+   	command => "tar -xf /mnt/sapbits2/linuxsapbits.tar",
+	unless => "find /mnt/sapbits | grep  HANA_51051151",
+	creates => "/mnt/sapbits/HANA_51051151",
+	cwd => "/mnt/sapbits",
 
-#  exec {
-#      "Extract linuxsapbits":
-#          command => "mkdir -p $destination_dir && cd $destination_dir && $extract_command $work_dir/$source_filename",
-#          unless  => "find $destination_dir | grep $extracted_dir",
-#          creates => "${destination_dir}/${extracted_dir}",
-#          require => Exec["Retrieve $url"],
-#  }
-
+}
 
 
 }
