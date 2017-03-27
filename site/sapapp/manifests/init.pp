@@ -56,16 +56,7 @@ class sapapp {
     mode   => '0775',
   }
 
-  
-  
-  exec { "chown silent and sapbits":
-       command => "chown root:sapinst /silent /mnt /mnt/sapbits"
-       	       }
-
-  exec { "chmod silent and sapbits" :
-       command => "chmod 775 /silent /mnt /mnt/sapbits"
-       }
-
+    
 #put required files into silent directory
 file { '/silent/doc.dtd':
   ensure => file,
@@ -91,6 +82,14 @@ file { '/silent/sapinst.sh':
   ensure => file,
   content => epp('sapapp/sapinst.sh.epp')
 }
+
+  exec { "chown silent and sapbits":
+       command => "chown root:sapinst /silent /mnt /mnt/sapbits"
+       	       }
+
+  exec { "chmod silent and sapbits" :
+       command => "chmod 775 /silent /mnt /mnt/sapbits"
+       }
 
 
 #exec { "install_start_sapapp":

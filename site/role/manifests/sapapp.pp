@@ -4,5 +4,5 @@ class role::sapapp {
   include hanaconfig
 #  include sapmount
   include sapfastmount
-#  include sapapp
+  include sapapp
 }
