@@ -95,7 +95,5 @@ exec { "extract linuxsapbits.tar" :
    creates => "/mnt/sapbits/HANA_51051151",
    cwd => "/mnt/sapbits",
     path    => '/bin:/usr/bin:/usr/sbin',
-}
-
-
+     timeout => '0',
 }
