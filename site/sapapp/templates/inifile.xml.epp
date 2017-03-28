@@ -1589,21 +1589,21 @@ The property is Microsoft Windows only. This is an optional property." />
         <properties>
           <property name ="doc-long" value =" Virtual host name of the primary application server instance (leave empty for default)" />
         </properties>
-        <strval><![CDATA[erxapp2]]>
+        <strval><![CDATA[<%= $facts[hostname] %>]]>
         </strval>
       </fld>
       <fld name="ascsVirtualHostname">
         <properties>
           <property name ="doc-long" value =" Standard system (with AS ABAP) only: Virtual host name for the ASCS instance (leave empty for default)" />
         </properties>
-        <strval><![CDATA[erxapp2]]>
+        <strval><![CDATA[<%= $facts[hostname] %>]]>
         </strval>
       </fld>
       <fld name="scsVirtualHostname">
         <properties>
           <property name ="doc-long" value =" Standard system (with AS Java) only: Virtual host name for the SCS instance (leave empty for default)" />
         </properties>
-        <strval><![CDATA[erxapp2]]>
+        <strval><![CDATA[<%= $facts[hostname] %>]]>
         </strval>
       </fld>
       <fld name="createGlobalRegInfoFile">
