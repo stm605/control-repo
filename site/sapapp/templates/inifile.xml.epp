@@ -303,7 +303,7 @@ The property is Microsoft Windows only. This is an optional property." />
         <properties>
           <property name ="doc-long" value =" The DB host" />
         </properties>
-        <strval><![CDATA[saphana-db2]]>
+        <strval><![CDATA[saphana-db]]>
         </strval>
       </fld>
       <fld name="instanceNumber">
