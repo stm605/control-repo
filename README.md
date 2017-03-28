@@ -197,3 +197,5 @@ One of the components setup by this control-repo is that when you "push" code to
  - On your Puppet Master, `ls -l /etc/puppetlabs/code/environments/production`.
     - Confirm test_file is present
 4. In your first terminal window review the `puppetserver.log` to see the type of logging each sync will create.
+
+5. done with the test
