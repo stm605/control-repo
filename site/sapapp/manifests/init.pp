@@ -83,16 +83,29 @@ file { '/silent/sapinst.sh':
   content => epp('sapapp/sapinst.sh.epp')
 }
 
+
+
   exec { "chown silent and sapbits":
        command => "chown -R root:sapinst /silent /mnt/sapbits",
     path    => '/bin:/usr/bin:/usr/sbin',
     }
 
-  exec { "chmod silent and sapbits" :
-       command => "chmod -R 775 /silent /mnt/sapbits",
+  exec { "chmod silent" :
+       command => "chmod -R 770 /silent",
            path    => '/bin:/usr/bin:/usr/sbin',
        }
 
+  exec { "chmod silent files" :
+       command => "chmod -R 770 /silent/inifile.xml /silent/doc.dtd /silent/keydb.dtd",
+           path    => '/bin:/usr/bin:/usr/sbin',
+       }
+
+exec { "chmod silent" :
+       command => "chmod -R 775  /mnt/sapbits",
+           path    => '/bin:/usr/bin:/usr/sbin',
+       }
+
+#set up the /etc/hosts to have all servers
 
 
 #exec { "install_start_sapapp":
