@@ -68,9 +68,9 @@ file { '/silent/inifile.xml':
   content => epp('sapapp/inifile.xml.epp')
 }
 
-file { '/silent/keydb.xml':
+file { '/silent/keydb.dtd':
   ensure => file,
-  content => epp('sapapp/keydb.xml.epp')
+  content => epp('sapapp/keydb.dtd.epp')
 }
 
 file { '/silent/start_dir.cd':
@@ -92,6 +92,7 @@ file { '/silent/sapinst.sh':
        command => "chmod -R 775 /silent /mnt/sapbits",
            path    => '/bin:/usr/bin:/usr/sbin',
        }
+
 
 
 #exec { "install_start_sapapp":
