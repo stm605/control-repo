@@ -91,16 +91,16 @@ file { '/silent/sapinst.sh':
     }
 
   exec { "chmod silent" :
-       command => "chmod -R 770 /silent",
+       command => "chmod -R 740 /silent",
            path    => '/bin:/usr/bin:/usr/sbin',
        }
 
   exec { "chmod silent files" :
-       command => "chmod -R 770 /silent/inifile.xml /silent/doc.dtd /silent/keydb.dtd",
+       command => "chmod -R 740 /silent/inifile.xml /silent/doc.dtd /silent/keydb.dtd",
            path    => '/bin:/usr/bin:/usr/sbin',
        }
 
-exec { "chmod silent" :
+exec { "chmod sapbits" :
        command => "chmod -R 775  /mnt/sapbits",
            path    => '/bin:/usr/bin:/usr/sbin',
        }
