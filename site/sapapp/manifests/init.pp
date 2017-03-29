@@ -53,32 +53,39 @@ class sapapp {
     ensure => 'directory',
     owner  => 'root',
     group  => 'sapinst',
-    mode   => '0775',
+    mode   => '0740',
+  }
+
+  file { '/silent.orig':
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'sapinst',
+    mode   => '0740',
   }
 
     
 #put required files into silent directory
-file { '/silent/doc.dtd':
+file { '/silent.orig/doc.dtd':
   ensure => file,
   content => epp('sapapp/doc.dtd.epp')
 }
 
-file { '/silent/inifile.xml':
+file { '/silent.orig/inifile.xml':
   ensure => file,
   content => epp('sapapp/inifile.xml.epp')
 }
 
-file { '/silent/keydb.dtd':
+file { '/silent.orig/keydb.dtd':
   ensure => file,
   content => epp('sapapp/keydb.dtd.epp')
 }
 
-file { '/silent/start_dir.cd':
+file { '/silent.orig/start_dir.cd':
   ensure => file,
   content => epp('sapapp/start_dir.cd.epp')
 }
 
-file { '/silent/sapinst.sh':
+file { '/silent.orig/sapinst.sh':
   ensure => file,
   content => epp('sapapp/sapinst.sh.epp')
 }
