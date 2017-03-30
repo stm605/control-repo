@@ -85,9 +85,14 @@ file { '/silent.orig/start_dir.cd':
   content => epp('sapapp/start_dir.cd.epp')
 }
 
-file { '/silent.orig/sapinst.sh':
+file { '/silent.orig/sapinst-step1.sh':
   ensure => file,
-  content => epp('sapapp/sapinst.sh.epp')
+  content => epp('sapapp/sapinst-step1.sh.epp')
+}
+
+file { '/silent.orig/sapinst-step2.sh':
+  ensure => file,
+  content => epp('sapapp/sapinst-step2.sh.epp')
 }
 
 

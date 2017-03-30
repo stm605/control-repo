@@ -1,0 +1,10 @@
+cd /silent.orig
+export HDB_MASSIMPORT=yes
+cp inifile.xml start_dir.cd /silent
+chown root:sapinst /silent
+chown root:sapinst /silent/*
+chmod 770 /silent
+chmod 770 /silent/*
+
+cd /silent
+/mnt/sapbits/SWPM10SP19_4-20009701/sapinst SAPINST_PARAMETER_CONTAINER_URL=/silent/inifile.xml SAPINST_EXECUTE_PRODUCT_ID=NW_ABAP_OneHost:BS2016.ERP608.HDB.PD SAPINST_SKIP_DIALOGS=true -nogui -noguiserver
