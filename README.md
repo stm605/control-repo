@@ -1,6 +1,6 @@
 Table of contents
 =================
-* This repository was initially started from the Puppet initial control repo.  We've added modules to do an automated SAP HANA & App Server installation.  These modules are in the **site** directory. Of course these modules may be used by themselves, or as this document describes as part of a brand-new Puppet Enterprise installation. 
+* This repository was initially started from the [Puppet-RampUpProgram](https://github.com/Puppet-RampUpProgram/control-repo) initial control repo.  We've added modules to do an automated SAP HANA & App Server installation.  These modules are in the **site** directory. Of course these modules may be used by themselves, or as this document describes as part of a brand-new Puppet Enterprise installation. 
 
 
 * [Before starting](#before-starting)
