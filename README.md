@@ -1,7 +1,8 @@
 Table of contents
 =================
+* This repository was initially started from the Puppet initial control repo.  We've added modules to do an automated SAP HANA & App Server installation.  These modules are in the **site** directory. Of course these modules may be used by themselves, or as this document describes as part of a brand-new Puppet Enterprise installation. 
 
-* [Join the \#ramp\-up channel on Puppet Community Slack](#join-the-ramp-up-channel-on-puppet-community-slack)
+
 * [Before starting](#before-starting)
 * [What you get from this control\-repo](#what-you-get-from-this-control-repo)
 * [How to set it all up](#how-to-set-it-all-up)
@@ -15,10 +16,7 @@ Table of contents
   * [Setup a webhook in your Git server](#setup-a-webhook-in-your-git-server)
     * [Gitlab](#gitlab-1)
   * [Test Code Manager](#test-code-manager)
-
-# Join the #ramp-up channel on Puppet Community Slack
-
-Our [Puppet Community Slack](http://slack.puppet.com) is a great way to interact with other Puppet users.  The #ramp-up channel is specifically for users who are new to Puppet Enterprise and using this repository. Other channels in the Puppet Community Slack are great for asking general Puppet questions.
+  * [SAP Hana modules](#sap-hana-modules)
 
 # Before starting
 
@@ -199,3 +197,14 @@ One of the components setup by this control-repo is that when you "push" code to
 4. In your first terminal window review the `puppetserver.log` to see the type of logging each sync will create.
 
 5. done with the test
+
+##SAP HANA Modules
+The modules that we've created/used are specific to creating a test HANA & Application server environment in Azure, and depend on a resource group being created using the [SAP-HANA-DEPLOY](https://github.com/AzureCAT-GSI/SAP-Hana-Deploy) template.  Please refer to the template for documentation on usage.
+
+These modules consist of:
+1. hanaconfig - this module configures a vanilla RedHat 7.2 virtual machine with the proper configurations for SAP hana.  
+1. hanapartition - this module configures 4 premium drives into a logical volume group, creates volumes within it, mounts the volumes appropriately for HANA, and adds the volumes to the /etc/fstab
+1. sapmount - mounts the Azure Files repository, which contains the artifacts for installation
+1. saphana - performs the automated install of SAP hana 
+1. sapfastmount - downloads the sapmount files into a partition, for faster installation of the ERP package
+1. sapapp - prepares the app server for execution of the application server & ERP install
