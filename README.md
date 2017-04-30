@@ -5,6 +5,7 @@ Table of contents
 
 * [Before starting](#before-starting)
 * [What you get from this control\-repo](#what-you-get-from-this-control-repo)
+* [High Level process summary for SAP](#high-level-process)
 * [How to set it all up](#how-to-set-it-all-up)
   * [Copy this repo into your own Git server](#copy-this-repo-into-your-own-git-server)
     * [GitLab](#gitlab)
@@ -20,7 +21,7 @@ Table of contents
 
 # Before starting
 
-This control-repo and the steps below are intended to be used with a new installation of PE.
+This control-repo and the steps below are intended to be used with a new installation of Puppet Enterprise (PE).
 
 **Warning:** When using an existing PE installation any existing code or modules in `/etc/puppetlabs/code` will be copied to a backup directory `/etc/puppetlabs/code_bak_<timestamp>` in order to allow deploying code from Code Manager.
 
@@ -28,14 +29,40 @@ This control-repo and the steps below are intended to be used with a new install
 
 When you finish the instructions below, you will have the beginning of a best practices installation of PE including:
 
- - A Git server
+ - A Git server (eg. GitHub)
  - The ability to push code to your Git server and have it automatically deployed to your PE master
  - A config_version script that outputs the most recent SHA of your code each time you run `puppet agent -t`
  - Optimal tuning of PE settings for this configuration
  - Working and example [roles and profiles](https://docs.puppet.com/pe/latest/puppet_assign_configurations.html#assigning-configuration-data-with-role-and-profile-modules) code
+ - The ability to set up and install SAP Hana on RedHat Linux virtual machines in Azure
 
-# How to set it all up
+# High level process
 
+1. Create an Azure Resource Group
+
+1. Within the Azure Resource Group, create a virtual network.  This will handle traffic between the machines in Azure.  
+
+1. Create an Azure Windows Virtual machine as a "client" machine within the resource group, on the virtual network created above.  These instructions describe setting up SAP in Azure within a locked-down environment - the SAP machines will not be accessible from the Internet.  This client machine will be able to access resources within the virtual network, including the SAP HANA server and the application servers.
+
+1. Create an Azure virtual machine as the puppet server.  For this example we used an Ubuntu machine, but any machine that will run Puppet enterprise will be fine.
+
+1. Install Puppet enterprise and the control_repo onto the puppet server.  This also includes customizing the Puppet modules as appropriate for your environment.
+
+1. Configure Puppet Enterprise to be able to manage RedHat machines
+
+1. Configure and run the SAP-Hana-Deploy resource group template
+
+1. Configure the SAP modules within the PE server.  Run puppet on the SAP Hana machine and the App server machine
+
+1. Verify SAP HANA installation
+
+1. Run application server/ERP installation on the Application server
+
+1. Verify correct operation of the environment
+
+## Create an Azure Resource Group
+## Create an Azure Virtual Network
+## 
 ## Copy this repo into your own Git server
 
 ### GitLab
