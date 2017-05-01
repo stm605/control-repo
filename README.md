@@ -61,69 +61,160 @@ When you finish the instructions below, you will have the beginning of a best pr
 1. Verify correct operation of the environment
 
 ## Create an Azure Resource Group
+  Log into the Azure portal at http://portal,azure.com.  You should get a window that looks like this:
+  ![image](./media/2017-04-30_14-54-12.jpg). 
+  Click the "+ New" button in the upper left:
+  ![image](./media/2017-04-30_14-58-44.jpg)
+  In the search box that pops up, type "resource group" and hit return.  
+  ![image](./media/2017-04-30_15-01-00.jpg)
+  Select the first choice in the results pane for "Resource group", and click the "create button".  
+  Type a name for your resource group, and choose a location for the resource group, and click "create":
+  ![image](./media/2017-04-30_15-03-18.jpg)
+
 ## Create an Azure Virtual Network
-## 
-## Copy this repo into your own Git server
 
-### GitLab
+In the Azure portal, click "Resource Groups" 
 
-1. On a new server, install GitLab.
- - https://about.gitlab.com/downloads/
+![image](./media/2017-04-30_15-05-45.jpg)
 
-2. After GitLab is installed, sign into the web UI with the user `root`.
- - The first time you visit the UI it will force you to enter a password for the `root` user.
+In the blade that comes up, click on the resource group you created above.  This will bring up the resource group blade:
 
-2. In the GitLab UI, create a group called `puppet`.
- - http://doc.gitlab.com/ce/workflow/groups.html
+![image](./media/2017-04-30_15-08-01.jpg)
 
-3. In the GitLab UI, make yourself a user to edit and push code.
+Click the "+ Add button":
 
-4. From your laptop or development machine, make an SSH key and link it with your GitLab user.
- - Note: The SSH key allows your laptop to communicate with the GitLab server and push code.
- - https://help.github.com/articles/generating-ssh-keys/
- - http://doc.gitlab.com/ce/ssh/README.html
+![image](./media/2017-04-30_15-08-43.jpg)
 
-7. In the GitLab UI, add your user to the `puppet` group.
- - You must give your user at least master permissions to complete the following steps.
- - Read more about permissions:
-    - https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/permissions/permissions.md
+Choose "virtual network" in the "everything" blade that comes up, and choose create.
 
-8. In the GitLab UI, create a project called `control-repo` and set its Namespace to the `puppet` group.
+![image](./media/2017-04-30_15-10-01.jpg)
 
-10. On your laptop, clone this PuppetLabs-RampUpProgram control repo.
- - `git clone https://github.com/PuppetLabs-RampUpProgram/control-repo.git`
+In the "Create virtual network blade, type a name for your virtual network, and verify the resource group and location are as you've planned, and click the create button:
+
+![image](./media/2017-04-30_15-14-05.jpg)
+
+This will create the virtual network that your virtual machines will connect to.
+
+## Create an Azure client Virtual machine
+
+We will need a Windows Server client machine to access the other machines in our network.  To do this via the portal, go back to the resource group blade, and click "+ Add".  In the search box, type "windows server", and in the list that comes up, choose "Windows Server 2012 R2 Datacener":
+
+![image](./media/2017-04-30_15-19-46.jpg)
+
+In the pane that comes up, select "create".  This will take you to the "Create Virtual Machine" blade.  Here, you will configure all the options for your new virtual machine.  
+
+![image](./media/2017-04-30_15-22-39.jpg)
+
+Type the name of your virtual machine, choose HDD for disk type, type a username and password, and choose OK. In the virtual machine size, you can choose the size you'd like.  We recommend the DS1_V2.  Finish the size selection by clicking "select".  In the Settings box that comes up, verify that the Virtual network name is the one you created earlier, and click "OK":
+
+![image](./media/2017-04-30_15-28-37.jpg)
+
+The Azure portal will then display and validate your options:
+
+![image](./media/2017-04-30_15-29-41.jpg)
+
+Click "OK", and the portal will create your virtual machine. This will typically take 3-5 minutes to complete, but you can continue on, since we won't need the virtual machine until we configure our Puppet Enterprise server.
+
+## Fork the control_repo
+
+In these instructions, we are going to assume the use of GitHub for the puppet repository.  For any other git source management, please refer to the documentation on your system.
+
+1. Create a user in GitHub.  If you already have a user, go to http://www.github.com and log in with your username and password.
+
+2. On the main page, click on the "New repository" button to create a repository for these artifacts: 
+
+![image](./media/2017-04-30_15-39-50.jpg)
+
+In the page that comes up, type a name for the repository (we used "control_repo"), and click "create repository".
+
+3. On your laptop, clone our source control repo.
+ - `git clone https://github.com/AzureCAT-GSI/control-repo.git`
  - `cd control-repo`
 
-14. On your laptop, remove the origin remote.
+4. On your laptop, remove the origin remote.
  - `git remote remove origin`
 
-15. On your laptop, add your GitLab repo as the origin remote.
+5. On your laptop, add your GitLab repo as the origin remote.
  - `git remote add origin <SSH URL of your GitLab repo>`
 
-16. On your laptop, push the production branch of the repo from your machine up to your Git server.
+6. On your laptop, push the production branch of the repo from your machine up to your Git server.
  - `git push origin production`
 
-### Stash
+ At this point, all of the artifacts from our source repository are replicated into your own repository.  You can make changes to the configurations or code on your local machine, `git commit` and `git push origin production` to update the repository.
 
-Coming soon!
+## Create a Puppet server in the virtual network
 
-### GitHub
+Go to the Azure portal, and open your resource group.  It should now show your virtual network and the virtual machine you created:
 
-Coming soon!
+![image](./media/2017-04-30_15-51-46.jpg)
+
+Click the "+ Add" button, and search for "Ubuntu Server 16.04 LTS", and select that in the results list.
+
+** You can run Puppet Enterprise on various other Linux systems, but we chose Ubuntu server for ease of use.
+
+The "Create virtual machine" blade is very similar to the one we had when we created the Windows Server virtual machine:
+
+![image](./media/2017-04-30_15-55-44.jpg)
+
+Here, choose a name for your PuppetMaster server, choose the VM disk type (HDD is fine), choose a username and select password authentication for the VM, and type & confirm a password.  Choose ok to continue.
+
+In the virtual machine size blade, the D2_V2 Standard vm size is fine.
+
+In the settings blade, click "Public IP address" and choose "None":
+
+![image](./media/2017-04-30_15-59-38.jpg)
+
+Also click "Network Security Group" and choose "none"
+
+** These last two configurations change our Puppet Master server to be accessible from the virtual network only.  To get to it, we'lll have to install Putty or some other SSH software for windows.
+
+Finally, click "OK" and create the virtual machine.
+
+## Install Puppet Enterprise and your control_repo
+
+In the Azure portal, open your resource group and click on the client machine you created earlier:
+
+![image](./media/2017-04-30_16-05-10.jpg)
+
+In the virtual machine blade that comes up, click "Connect":
+
+![image](./media/2017-04-30_16-06-48.jpg)
+
+This will download an .RDP file to your machine.  Click on "Open" to open it:
+
+![image](./media/2017-04-30_16-08-02.jpg)
+
+Enter the credentials you used when you created the virtual machine.  This will start remote desktop to your client virtual machine, and you should have the "Server Manager" open:
+
+![image](./media/2017-04-30_16-11-53.jpg)
+
+Click on "Local Server" and click on "IE Enhanced Security Configuration".  Turn IE Enhanced Security Configuration" off for administrators
+> this is not a best practice for production servers - we are only setting this for ease of use for this documentation.
+
+Download and install the 64-bit version of Putty from `http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html`
+
+## Make note of Azure configurations
+
+Before continuing, go to the Azure portal and make note of the subscription name, the subscription ID, the resource group name, the subnet name, and the internal IP address for both the test client machine and the PuppetMaster virtual machine.
 
 ## Configure PE to use the control-repo
 
 ### Install PE
-
-1. Download the latest version of the PE installer for your platform
+1. On the test client machine, download the latest version of the PE installer for your platform
  - https://puppetlabs.com/download-puppet-enterprise
-2. SSH into your Puppet master and copy the installer tarball into `/tmp`
-2. Expand the tarball and `cd` into the directory
-3. Run `puppet-enterprise-installer` to install
+2. PSCP the downloaded installer to your Puppet master with a command like this:
+```CMD
+pscp puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz adminuser@10.2.0.5:/home/adminuser/puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz
+```
+3. SSH to the Puppet Master machine as the user you created (adminuser, in our case)
+2. Expand the tarball (`tar -xzf puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz` and `cd` into the directory `puppet-enterprise-2017.1.0-ubuntu-16.04-amd64`
+3. Run `sudo ./puppet-enterprise-installer` to install.  We used the "Text-mode" install, and in the configuration step (where the installer puts you into the vi editor with a configuration file), we only changed the admin user's password.
 
-If you run into any issues or have more questions about the installer you can see our docs here:
+If you run into any issues or have more questions about the installer you can see the Puppet enterprise docs here:
 
 http://docs.puppetlabs.com/pe/latest/install_basic.html
+
+Be sure to run `puppet agent -t` which completes the puppet enterprise installation.
 
 ### Get the control-repo deployed on your master
 
@@ -131,9 +222,10 @@ At this point you have our control-repo code deployed into your Git server.  How
 
 We will set up a deploy key in the Git server that will allow an SSH key we make to deploy the code and configure everything else.
 
-1. On your Puppet master, make an SSH key for r10k to connect to GitLab
+1. On your Puppet master, make an SSH key for r10k to connect to GitHub
 
-  ~~~
+  ~~~bash
+  sudo su -
   mkdir /etc/puppetlabs/puppetserver/ssh
   /usr/bin/ssh-keygen -t rsa -b 2048 -C 'code_manager' -f /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa -q -N ''
   cat /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa.pub
@@ -142,14 +234,19 @@ We will set up a deploy key in the Git server that will allow an SSH key we make
  - References:
     - https://help.github.com/articles/generating-ssh-keys/
     - http://doc.gitlab.com/ce/ssh/README.html
-2. In the GitLab UI, create a deploy key on the `control-repo` project
+
+2. In the GitHub UI, create a deploy key on the `control-repo` project
  - Paste in the public key from above
-3. Login to the PE console
+3. Login to the PE console via a browser at https://<your puppetmaster ip address>
+  you should get a screen that looks like this:
+  ![image](./media/2017-04-30_17-32-31.jpg)
+  
+  The username is admin, and the password is whatever you set it to in the puppetmaster install above.
 4. Navigate to the **Nodes > Classification** page
  - Click on the **PE Master** group
  - Click the **Classes** tab
  - Add the `puppet_enterprise::profile::master`
-    - Set the `r10k_remote` to the SSH URL from the front page of your GitLab repo
+    - Set the `r10k_remote` to the SSH URL from the front page of your GitHub repo
     - Set the `r10k_private_key` parameter to `/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa`
  - **Commit** your changes
 5. On your Puppet master
@@ -185,48 +282,94 @@ We will set up a deploy key in the Git server that will allow an SSH key we make
 
 9. Code Manager is configured and has been used to deploy your code
 
-## Setup a webhook in your Git server
 
-Independent of which Git server you choose you will grab the webhook URL from your master.  Then each Git Server will have similar but slightly different ways to add the webhook.
+## Configure puppet to manage RedHat machines
+  In the puppet console navigate back to the **Nodes > Classification** page, and in the **PE Infrastructure** group, select the **PE Master** node.  
 
-1. On your Puppet master
- - `cat /etc/puppetlabs/puppetserver/.puppetlabs/webhook_url.txt`
+  On the Classes tab in the Class name field, enter pe_repo and select `pe_repo::platform::el_7_x86_64` from the list of classes.
 
-### Gitlab
+  Click **Add class**, and commit changes.
 
-2. In your Git server's UI, navigate to the control-repo repository
- -  In the left hand pane, scroll to the bottom and select **settings**
- - In the left hand pane, select **webhooks**
-3. Paste the above webhook URL into the URL field
-4. In the trigger section mark the checkbox for **push events** only
-3. Disable SSL verification on the webhook
- - Since Code Manager uses a self-signed cert from the Puppet CA it is not generally trusted
-3. After you created the webhook use "test webhook" or similar functionality to confirm it works
+  Run `puppet agent -t` on the Puppet Master to configure the Puppet master node.
 
-## Test Code Manager
+## Configure and run the SAP-Hana-Deploy resource group template
 
-One of the components setup by this control-repo is that when you "push" code to your Git server, the git server will inform the Puppet master to deploy the branch you just pushed.
+Download the SAP-Hana-Deploy resource group template onto your local machine with `git clone https://github.com/AzureCAT-GSI/SAP-Hana-Deploy.git`.  
 
-1. On your Puppet Master, `tail -f /var/log/puppetlabs/puppetserver/puppetserver.log`.
-2. On your laptop in a separate terminal window:
- - Add a new file
+### Deployment Instructions
+  1. Open **.\deploymentParameters\appsTier.Parameters.json**
+  2. Replace the values in the following properties to match your environment:
+      * `virtualNetworkResourceGroupName` : The name of the __resource group__ that contains the virtual network you want the SAP ERP virtual machine deployed in.
+      * `virtualNetworkName` : The name of the virtual network.
+      * `subnetName` : The name of the subnet where you want the SAP ERP virtual machine deployed.
+      * `privateIpAddresses` :The private IP addresses to assign to the network interface cards (NICS) attached to the SAP ERP virtual machine.  You must specify two private IP addresses from the subnet address range.
+      * `puppetServerIpAddress` : The private IP address of the Puppet Server virtual machine.
+  4. (optional) You can change other properties, such as vmName, vmSize, image, etc. to customize the deployment to your environment.  
+  5. Save the changes.
+  6. Open **.\deploymentParameters\dataTier.Parameters.json**
+  7. Repeat steps 2 through 4 for the SAP Hana DB virtual machine.
+  8. Open a PowerShell console.
+  ```PowerShell
+  ## Authenticate to Azure Subscription
+  Login-AzureRmAccount
 
-    ~~~
-    touch test_file
-    git add test_file
-    git commit -m "adding a test_file"
-    git push origin production
-    ~~~
+  ## Deploy 
+  .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation westus
+  ```
+>> The default resource group name is "SAP-Hana-IaaC"; if you would like something different, use the parameter -ResourceGroupName <your resource group name here>
 
-3. Allow the push to complete and then wait a few seconds for everything to sync over.
- - On your Puppet Master, `ls -l /etc/puppetlabs/code/environments/production`.
-    - Confirm test_file is present
-4. In your first terminal window review the `puppetserver.log` to see the type of logging each sync will create.
+## Configure the SAP modules within the PE server
+After the machines have been created using the resource group template above, they will automatically attampt to register themselves with the PuppetMaster server.  Go to the Puppet Enterprise admin console.
+Under **Nodes/Unsigned Certificates** you should see two requests for certificates, one from each of the machines that the resource group template created:
 
-5. done with the test
+![image](./media/2017-05-01_10-04-50.jpg)  
+
+Accept both.  The actual process for registration will take a few minutes before the new machines show up in the inventory page.
+
+In the puppet enterprise console, click on Nodes, and Classification, and create a new group named "RHEL_Nodes".  Click on "Add Membership rules, classes and variables", and Configure the rule to be "osfamily = RedHat".
+
+![image](./media/2017-04-30_23-18-27.jpg)
+
+click on the "classes" tab, and the parameters rh_user and rh_password.  Put in values for these that are appropriate for your subscription for RedHat.  This is necessary to receive updates to your Linux VMs.
+
+![image](./media/2017-04-30_23-21-16.jpg)
+
+Under the RHEL_Nodes, create another group of machines called `SAPHANA_Nodes`, and make the maching rule be hostname=saphanadb:
+
+![image](./media/2017-04-30_23-25-18.jpg)
+
+Click the `Classes` tab, and add the class **role:saphana**.  Save all changes.
+
+![images](./media/2017-04-30_23-27-38.jpg)
+
+Next create a rule for the SAP Application server.  Under the RHEL_Nodes, create a group of machines called `SAPAPP_Nodes`, with the rule that `hostname=saperpci*`. 
+
+![image](./media/2017-04-30_23-29-54.jpg)
+
+Click the `classes` tab, and add`role=sapapp`:
+
+![images](./media/2017-04-30_23-32-15.jpg)
+
+save all configurations.
+
+
+## Verify SAP HANA installation
+After approximately 25 minutes, the SAP Hana machine should be fully configured and installed.  To check the installation, you can SSH to the Hana machine (sapHanaDB) and do the following commands:
+```bash
+  sudo su -
+  su hdbadm
+  HDB info
+```
+This should give information on the running HANA server, similar to this:
+<put snippet from actual test here>
+## Run application Server/ERP installation
+<put instructions here>
+## Verify correct operation of the environment
+<discuss potential installation of sapgui on the client machine, and connecting to the app server.
+
 
 ##SAP HANA Modules
-The modules that we've created/used are specific to creating a test HANA & Application server environment in Azure, and depend on a resource group being created using the [SAP-HANA-DEPLOY](https://github.com/AzureCAT-GSI/SAP-Hana-Deploy) template.  Please refer to the template for documentation on usage.
+The Puppet modules that configure and install the software as described above are located in this control_repo.  They are specific to creating a test HANA & Application server environment in Azure, and depend on a resource group being created using the [SAP-HANA-DEPLOY](https://github.com/AzureCAT-GSI/SAP-Hana-Deploy) template, as described above.  Please refer to the template for documentation on usage.
 
 These modules consist of:
 1. hanaconfig - this module configures a vanilla RedHat 7.2 virtual machine with the proper configurations for SAP hana.  
