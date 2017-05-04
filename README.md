@@ -25,6 +25,14 @@ This control-repo and the steps below are intended to be used with a new install
 
 **Warning:** When using an existing PE installation any existing code or modules in `/etc/puppetlabs/code` will be copied to a backup directory `/etc/puppetlabs/code_bak_<timestamp>` in order to allow deploying code from Code Manager.
 
+# Notes on tools
+* We've assumed the use of github for source management.  Of course you can use any other line service, or use your own git server.  You will have to translate these instructions to using the other source repository.
+* We have tried to keep these instructions as platform agnostic as possible, but several steps show command line tools for interacting with github.  You can use whatever tools you'd like, but you will have to translate these instructions for your tools. For interacting with github there are many options, including:
+ * git command line for the platform you are using
+ * [git desktop](https://desktop.github.com/) 
+ * [Visual Studio Code](https://code.visualstudio.com/)
+ * you can simply download the project zip file from github, and unpack it on your machine
+
 # What you get from this control-repo
 
 When you finish the instructions below, you will have the beginning of a best practices installation of PE including:
@@ -127,17 +135,21 @@ In these instructions, we are going to assume the use of GitHub for the puppet r
 
 In the page that comes up, type a name for the repository (we used "control_repo"), and click "create repository".
 
-3. On your laptop, clone our source control repo.
- - `git clone https://github.com/AzureCAT-GSI/control-repo.git`
- - `cd control-repo`
+3. On your local machine, clone our source control repo.
+```bash
+ `git clone https://github.com/AzureCAT-GSI/control-repo.git`
+ `cd control-repo`
+```
 
-4. On your laptop, remove the origin remote.
+> If you have MFA enabled on your github account, you will need to create a personal access token, and user that as your password
+
+4. On your local machine, remove the origin remote.
  - `git remote remove origin`
 
-5. On your laptop, add your GitLab repo as the origin remote.
- - `git remote add origin <SSH URL of your GitLab repo>`
+5. On your local machine, add your GitLab repo as the origin remote.
+ - `git remote add origin <HTTPS URL of your GitLab repo>` 
 
-6. On your laptop, push the production branch of the repo from your machine up to your Git server.
+6. On your local machine, push the production branch of the repo from your machine up to your Git server.
  - `git push origin production`
 
  At this point, all of the artifacts from our source repository are replicated into your own repository.  You can make changes to the configurations or code on your local machine, `git commit` and `git push origin production` to update the repository.
@@ -207,8 +219,8 @@ Before continuing, go to the Azure portal and make note of the subscription name
 pscp puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz adminuser@10.2.0.5:/home/adminuser/puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz
 ```
 3. SSH to the Puppet Master machine as the user you created (adminuser, in our case)
-2. Expand the tarball (`tar -xzf puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz` and `cd` into the directory `puppet-enterprise-2017.1.0-ubuntu-16.04-amd64`
-3. Run `sudo ./puppet-enterprise-installer` to install.  We used the "Text-mode" install, and in the configuration step (where the installer puts you into the vi editor with a configuration file), we only changed the admin user's password.
+4. Expand the tarball (`tar -xzf puppet-enterprise-2017.1.0-ubuntu-16.04-amd64.tar.gz` and `cd` into the directory `puppet-enterprise-2017.1.0-ubuntu-16.04-amd64`
+5. Run `sudo ./puppet-enterprise-installer` to install.  We used the "Text-mode" install, and in the configuration step (where the installer puts you into the vi editor with a configuration file), we only changed the admin user's password.
 
 If you run into any issues or have more questions about the installer you can see the Puppet enterprise docs here:
 
@@ -245,11 +257,11 @@ We will set up a deploy key in the Git server that will allow an SSH key we make
 4. Navigate to the **Nodes > Classification** page
  - Click on the **PE Master** group
  - Click the **Classes** tab
- - Add the `puppet_enterprise::profile::master`
-    - Set the `r10k_remote` to the SSH URL from the front page of your GitHub repo
+ - Scroll down to the `puppet_enterprise::profile::master` class.  If it is not in the list, you will have to create it.
+    - Set the `r10k_remote` to the HTTPS URL from the front page of your GitHub repo
     - Set the `r10k_private_key` parameter to `/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa`
  - **Commit** your changes
-5. On your Puppet master
+5. On your Puppet master (in your ssh session)
  - Run:
 
     ~~~
@@ -294,10 +306,14 @@ We will set up a deploy key in the Git server that will allow an SSH key we make
 
 ## Configure and run the SAP-Hana-Deploy resource group template
 
-Download the SAP-Hana-Deploy resource group template onto your local machine with `git clone https://github.com/AzureCAT-GSI/SAP-Hana-Deploy.git`.  
+The SAP-Hana-Deploy resource template will create two virtual machines that will be connected to the virtual network that you created above. Download the SAP-Hana-Deploy resource group template onto your local machine with 
+```bash
+git clone https://github.com/AzureCAT-GSI/SAP-Hana-Deploy.git
+```
 
 ### Deployment Instructions
-  1. Open **.\deploymentParameters\appsTier.Parameters.json**
+  1. From the directory you ran git from above, change directory to `SAP-Hana-Deploy/SAP-Hana-IaaC/SAP-Hana-IaaC`
+  1. Open **.\deploymentParameters\appsTier.Parameters.json** with your favorite text editor.
   2. Replace the values in the following properties to match your environment:
       * `virtualNetworkResourceGroupName` : The name of the __resource group__ that contains the virtual network you want the SAP ERP virtual machine deployed in.
       * `virtualNetworkName` : The name of the virtual network.
@@ -330,43 +346,91 @@ In the puppet enterprise console, click on Nodes, and Classification, and create
 
 ![image](./media/2017-04-30_23-18-27.jpg)
 
-click on the "classes" tab, and the parameters rh_user and rh_password.  Put in values for these that are appropriate for your subscription for RedHat.  This is necessary to receive updates to your Linux VMs.
+Click on the "classes" tab, and add new class named "rhsm". Then add the parameters rh_user and rh_password.  Put in values for these that are appropriate for your subscription for RedHat.  This will cause the machines to be registered with the redhat subscription automatically.  This is necessary to receive updates to your Linux VMs.
 
 ![image](./media/2017-04-30_23-21-16.jpg)
 
-Under the RHEL_Nodes, create another group of machines called `SAPHANA_Nodes`, and make the maching rule be hostname=saphanadb:
+Under classification, create a group of machines with `RHEL_Nodes` as the partent, and name it `SAPHANA_Nodes`, and make the maching rule be `hostname - sapsaphanadb`:
 
-![image](./media/2017-04-30_23-25-18.jpg)
+![image](./media/2017-05-04_12-14-12.jpg)
 
-Click the `Classes` tab, and add the class **role:saphana**.  Save all changes.
+Click the `Classes` tab, and add the class **role:*saphana**.  Save all changes.
 
 ![images](./media/2017-04-30_23-27-38.jpg)
 
-Next create a rule for the SAP Application server.  Under the RHEL_Nodes, create a group of machines called `SAPAPP_Nodes`, with the rule that `hostname=saperpci*`. 
+Next create a rule for the SAP Application server.  Under the RHEL_Nodes, create a group of machines called `SAPAPP_Nodes`, with the rule that `hostname - saperpci*`. 
 
-![image](./media/2017-04-30_23-29-54.jpg)
+![image](./media/2017-05-04_12-15-24.jpg)
 
-Click the `classes` tab, and add`role=sapapp`:
+> please note that the rule is not using the `=` operator, it's using the `-`, which is a regular expression comparison.  
+
+Click the `classes` tab, and add the class **role::sapapp**:
 
 ![images](./media/2017-04-30_23-32-15.jpg)
 
-save all configurations.
+press commit to save all configurations.
 
 
 ## Verify SAP HANA installation
-After approximately 25 minutes, the SAP Hana machine should be fully configured and installed.  To check the installation, you can SSH to the Hana machine (sapHanaDB) and do the following commands:
+After approximately 25 minutes, the SAP Hana machine should be fully configured and installed.  In the puppet console, you can find your HANA vm under the **Nodes/Inventory** and click "Run Puppet" to force puppet to run immediately:
+
+![image](./media/2017-05-01_11-04-44.jpg).
+
+during the installation process, the Puppet modules will cause the machine to reboot (to set Linux kernel parameters).  After the reboot happens, run puppet on the hana node again, which will finish the hana installation.
+
+To check the installation, you can SSH to the Hana machine (sapHanaDB) and do the following commands:
 ```bash
   sudo su -
-  su hdbadm
+  su - hdbadm
   HDB info
 ```
-This should give information on the running HANA server, similar to this:
-<put snippet from actual test here>
-## Run application Server/ERP installation
-<put instructions here>
-## Verify correct operation of the environment
-<discuss potential installation of sapgui on the client machine, and connecting to the app server.
 
+This should give information on the running HANA server, similar to this:
+
+![image](./media/2017-05-01_14-00-04.jpg)
+
+## Run application Server/ERP installation
+
+Start a new Putty session, and SSH into your SAPERPCI machine.  
+Add the IP address and hostname of the HANA machine to the /etc/hosts file (using the editor of your choice).
+To make sure Puppet has run, you can run 
+```bash
+  sudo su -
+  puppet agent -t
+```
+
+For the time being, let's turn off puppet:
+```bash
+  sudo su -
+  puppet agent --disable
+```
+
+Next we are going to run a script that installs the SAP Application server and ERP software. do the following:
+```bash
+  sudo su -
+  cd /silent.orig
+  vi inifile.xml
+```
+  in inifile.xml, search for `saphanadb`, and replace this string with the hostname of your hana machine.  finally execute
+
+```bash
+  sudo su -
+  cd /silent.orig
+  bash ./sapinst-step1.sh
+```
+  This should complete in a minute or so.  It will result in output that looks like this:
+  ![image](./media/2017-05-04_12-57-10.jpg)
+
+  Do not be alarmed that the output says "Abort execution", this is a known issue.  Continue on with:
+
+```bash
+  bash ./sapinst-step2.sh
+```
+
+the `sapinst-step1.sh` should complete in a minute or two, but the `sapinst-step2.sh` will take several hours to complete.
+
+## SAPGUI installation 
+You can optionally download the SAPGui from the SAP SWDC on the Windows jumpbox machine that you created.  This will be a convenient way to access the SAP application from the environment that you've created.
 
 ##SAP HANA Modules
 The Puppet modules that configure and install the software as described above are located in this control_repo.  They are specific to creating a test HANA & Application server environment in Azure, and depend on a resource group being created using the [SAP-HANA-DEPLOY](https://github.com/AzureCAT-GSI/SAP-Hana-Deploy) template, as described above.  Please refer to the template for documentation on usage.
