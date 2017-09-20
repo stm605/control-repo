@@ -226,7 +226,7 @@ If you run into any issues or have more questions about the installer you can se
 
 http://docs.puppetlabs.com/pe/latest/install_basic.html
 
-Be sure to run `puppet agent -t` which completes the puppet enterprise installation.
+Be sure to run `sudo puppet agent -t` which completes the puppet enterprise installation.
 
 ### Get the control-repo deployed on your master
 
